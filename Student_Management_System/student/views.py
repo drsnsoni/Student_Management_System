@@ -13,9 +13,26 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
-def login(request):
-    return render(request, 'login.html')
+def Login(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return render(request, 'index.html')
+        else:
+            # result = render(request, "login.html")
+            # message = "Wrong USername Or Password"
+            # if result:
+            #     context = {
+            #         "message":message
+            #     }
+            return render(request, 'login.html')
+    else:
+        return render(request, "login.html")
 
+   
 def signup(request):
     if request.method == 'POST':
         form = signupgorm(request.POST)

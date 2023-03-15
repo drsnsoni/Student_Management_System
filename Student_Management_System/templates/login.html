@@ -42,22 +42,30 @@
         </div>
       </div>
     </nav>
-    <h1 class="text-center my-4">Welcome To Gandhinagar University Student Portal!</h1>
     
-   
+    {% if message %}
+        <script>
+            alert("{{ message }}")
+        </script>
+    {% endif %}
+        
+    <h1 class="text-center my-4">Welcome To Gandhinagar University Student Portal!</h1>
     <div class="container my-4">
         <main class="form-signin w-50  mx-auto" style="margin-top: 100px;">
-            <form class="text-center">
+            <form class="text-center" method="POST">
+                {% csrf_token %}
+                
                 <img class="mb-4 " src="https://s8w3b8n4.stackpathcdn.com/wp-content/uploads/2019/01/gu-logo-trans.png" alt="gu logo" style="max-height: 150px;">
                 {% comment %} <img class="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> {% endcomment %}
+                
               <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-          
+        
               <div class="form-floating">
-                <input type="text" class="form-control" id="floatingInput" placeholder="username">
+                <input type="text" class="form-control" id="floatingInput" placeholder="username" name="username">
                 <label for="floatingInput">Username</label>
               </div>
               <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password"> 
                 <label for="floatingPassword">Password</label>
               </div>
           
