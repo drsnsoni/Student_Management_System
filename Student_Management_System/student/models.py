@@ -37,3 +37,15 @@ class Student(models.Model):
 
 # class result(models.Model):
 #     id = 
+
+class Exam(models.Model):
+    exam_name = models.CharField(max_length=100)
+
+class Subject(models.Model):
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    subject_name = models.CharField(max_length=100)
+
+class Marks(models.Model):
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    student_name = models.CharField(max_length=100)
+    marks = models.IntegerField()

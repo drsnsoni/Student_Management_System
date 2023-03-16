@@ -5,6 +5,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .forms import signupgorm
+from django.contrib.auth import logout
 # Create your views here.
 def index(request):
     students = Student.objects.all()
@@ -20,7 +21,7 @@ def Login(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return render(request, 'index.html')
+            return render(request, 'dashboard.html')
         else:
             # result = render(request, "login.html")
             # message = "Wrong USername Or Password"
@@ -45,3 +46,15 @@ def signup(request):
     context = {'form': form}
     return render(request, 'register.html', context)
     
+
+def activity(request):
+    return render(request, 'activities.html')
+
+def result(request):
+    return render(request, 'results.html')
+
+
+def logout_view(request):
+    logout(request)
+    # Redirect to a success page.
+    return redirect('login')

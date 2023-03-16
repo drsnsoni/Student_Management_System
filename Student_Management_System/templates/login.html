@@ -28,14 +28,14 @@
   
     <nav class="navbar bg-primary navbar-expand-lg" data-bs-theme="dark" style="font-size: large;  font-weight: bold;">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img src="https://s8w3b8n4.stackpathcdn.com/wp-content/uploads/2019/01/gu-logo-trans.png" alt="gu logo" style="max-height: 60px;"></a>
+        <a class="navbar-brand" href="{% url 'index' %}"><img src="https://s8w3b8n4.stackpathcdn.com/wp-content/uploads/2019/01/gu-logo-trans.png" alt="gu logo" style="max-height: 60px;"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item justify-content-end" >
-              <a class="nav-link active" aria-current="page" href="/register">Register</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'register' %}">Register</a>
             </li>  
           </ul>
         
