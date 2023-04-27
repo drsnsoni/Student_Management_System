@@ -7,12 +7,12 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import signupgorm
 from django.contrib.auth import logout
 # Create your views here.
-def index(request):
-    students = Student.objects.all()
-    context ={
-        "stud" :students
-    }
-    return render(request, 'index.html', context)
+# def index(request):
+#     students = Student.objects.all()
+#     context ={
+#         "stud" :students
+#     }
+#     return render(request, 'Dashboard.html', context)
 
 def Login(request):
     if request.method == "POST":
@@ -21,7 +21,11 @@ def Login(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return render(request, 'dashboard.html')
+            students = Student.objects.all()
+            context ={
+                "stud" :students
+            }
+            return render(request, 'dashboard.html', context)
         else:
             # result = render(request, "login.html")
             # message = "Wrong USername Or Password"
