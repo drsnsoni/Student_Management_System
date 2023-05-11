@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% block title %} Result {% endblock %} {% block content %}
+<div class="row mt-4">
+
+    <div class="card">
+        <h2 class="text-center my-4">Mse 1</h2>
+        <div class="table-responsive">
+            <table class="table align-items-center mb-0">
+                <thead>
+                    <tr>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder opacity-7">Subjects</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder opacity-7 ps-2">Total</th>
+                        <th class="text-center text-uppercase text-secondary text-m font-weight-bolder opacity-7">Get</th>
+                        <th class="text-center text-uppercase text-secondary text-m font-weight-bolder opacity-7">Status</th>
+                        <th class="text-secondary opacity-7"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for i in result %}
+                    <tr>
+                        <td>
+                            <div class="d-flex px-2 py-1">
+
+                                <div class="d-flex flex-column justify-content-center">
+                                    <h6 class="mb-0 text-lg">{{ i.subject }}</h6>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="text-lg font-weight-bold mb-0">{{ i.total_marks }}</p>
+                        </td>
+
+                        <td class="align-middle text-center">
+                            <span class="text-secondary text-lg font-weight-bold">{{ i.marks_obtained }}</span>
+                        </td>
+                        {% if i.marks_obtained >= 12 %}
+                        <td class="align-middle text-center text-sm">
+                            <button type="button" class="btn btn-success ">Pass</button>
+                        </td>
+
+                        {% else %}
+
+                        <td class="align-middle text-center text-sm">
+                            <button type="button" class="btn btn-danger ">Fail</button>
+                        </td>
+                        {% endif %}
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block content %}
+
+
+
+
+
+<div class="row mt-4">
+    <div class="card">
+        <h2 class="my-4">Enter Your Details</h2>
+        {% load crispy_forms_tags %}
+        <form action="" method="post">
+            {% csrf_token %} {{ form.name | as_crispy_field }} {{ form.email | as_crispy_field }} {{ form.Enroll_no | as_crispy_field }} {{ form.date_of_birth | as_crispy_field }} {{ form.SPI | as_crispy_field }}{{ form.CGPA | as_crispy_field }} {{ form.sem | as_crispy_field}}
+            {{form.gender| as_crispy_field }} {{ form.mobile_no | as_crispy_field }}{{ form.parents_email | as_crispy_field }}{{ form.address | as_crispy_field }}{{ form.parents_email | as_crispy_field }}{{ form.adhar_no | as_crispy_field }}
+            <button type="submit" class="btn btn-outline-success">Register</button>
+
+        </form>
+    </div>
+    {% endblock %}
