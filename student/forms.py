@@ -1,12 +1,16 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Student
+from .models import Student, Activity, Assignment
+
+
+#register Form
 class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['first_name','username', 'email','password1', 'password2']
 
+#Student Form
 class StudentForm(forms.ModelForm):
     name  = forms.TextInput()
     email = forms.EmailInput
@@ -38,4 +42,30 @@ class StudentForm(forms.ModelForm):
             'mobile_no',
             'parents_no',
             'address'
+        )
+
+#Activity Form
+class activityform(forms.ModelForm):
+     activity_title = forms.CharField()
+     activity_file = forms.ImageField()
+     enroll_no = forms.IntegerField()
+     class Meta:
+        model = Activity
+        fields = (
+            'activity_title',
+            'activity_file',
+            'enroll_no',
+        )
+
+#Assignment Form
+class assignmentform(forms.ModelForm):
+     assignment_title = forms.CharField()
+     assignment_file = forms.ImageField()
+     enroll_no = forms.IntegerField()
+     class Meta:
+        model = Assignment
+        fields = (
+            'assignment_title',
+            'assignment_file',
+            'enroll_no',
         )

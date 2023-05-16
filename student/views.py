@@ -4,8 +4,8 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-from .forms import SignUpForm, StudentForm
-from .models import Student, StudentResult
+from .forms import SignUpForm, StudentForm, activityform, assignmentform
+from .models import Student, StudentResult,Activity,Assignment
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -20,12 +20,12 @@ def login(request):
         if user:
             auth_login(request, user)
             # return redirect('dashboard/'+ username)
+            
             stu = Student.objects.filter(Enroll_no=int(username))
             if len(stu)>0:
                 return redirect('dashboard/'+ username)  
             else:
                 return redirect('personalinfo')
-            
         else:
             error_message = 'Invalid login credentials. Please try again.'
             return render(request, 'login.html', {'error_message': error_message})
@@ -57,18 +57,6 @@ def dashboard(request, id):
     return render(request, 'dashboard.html', context)
    
 
-# @login_required(login_url='/login')  
-# def studnt(request):
-#     if request.method == 'POST':
-#         form = StudentForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return render(request, 'fillform.html', {'form': form})  
-#         else:
-#             return redirect('login')
-        
-
-
 @login_required(login_url='/login')
 def result(request):
     result = StudentResult.objects.all()
@@ -79,12 +67,32 @@ def result(request):
 
 @login_required(login_url='/login')
 def activity(request):
-    return render(request, 'activity.html')
+    if request.method == 'POST':
+        form = activityform(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('activity')
+            # redirect to success page
+    else:
+     form = activityform()  
+    user = request.user
+    act = Activity.objects.filter(enroll_no=str(user))
+    return render(request,'activity.html', {'form': form, 'activity':act})
+
 
 @login_required(login_url='/login')
-def attendance(request):
-    
-    return render(request, 'attendance.html')
+def assignment(request):
+    if request.method == 'POST':
+        form = assignmentform(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('assignments')
+            # redirect to success page
+    else:
+     form = assignmentform()  
+    user = request.user
+    asign= Assignment.objects.filter(enroll_no=str(user))
+    return render(request, 'assignments.html',{'form': form, 'asign':asign})
 
 @login_required(login_url='/login')
 def profile(request):
