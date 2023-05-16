@@ -4,12 +4,12 @@ from django.db import models
 # Create your models here.
 class Student(models.Model):
     name = models.CharField(max_length=50)
+    profile_photo = models.ImageField(upload_to='static/profile_photos', default=False)
     email = models.EmailField()
     Enroll_no = models.IntegerField()
     date_of_birth = models.DateField()
     SPI = models.DecimalField(max_digits=3, decimal_places=2)
     CGPA = models.DecimalField(max_digits=3, decimal_places=2)
-    adhar_no = models.IntegerField()
     sem = models.IntegerField()
     GENDER_CHOICES = [
         ('M', 'MALE'),
@@ -19,7 +19,6 @@ class Student(models.Model):
     gender = models.CharField(choices=GENDER_CHOICES, max_length=20)
     mobile_no = models.IntegerField()
     parents_no = models.IntegerField()
-    parents_email = models.EmailField()
     address = models.TextField()
 
     def __str__(self):

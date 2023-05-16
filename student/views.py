@@ -20,7 +20,12 @@ def login(request):
         if user:
             auth_login(request, user)
             # return redirect('dashboard/'+ username)
-            return redirect('dashboard/'+username)
+            stu = Student.objects.filter(Enroll_no=int(username))
+            if len(stu)>0:
+                return redirect('dashboard/'+ username)  
+            else:
+                return redirect('personalinfo')
+            
         else:
             error_message = 'Invalid login credentials. Please try again.'
             return render(request, 'login.html', {'error_message': error_message})
@@ -43,12 +48,14 @@ def signup(request):
 @login_required(login_url='/login')
 def dashboard(request, id):
     stud = User.objects.get(username=id)
-  
+    stud_data = Student.objects.get(Enroll_no = id)
     context={
         'student':stud,
-       
+        'stud_data':stud_data
     }
+   
     return render(request, 'dashboard.html', context)
+   
 
 # @login_required(login_url='/login')  
 # def studnt(request):
@@ -75,15 +82,21 @@ def activity(request):
     return render(request, 'activity.html')
 
 @login_required(login_url='/login')
-def attendance(request, id):
-    
-    result = StudentResult.objects.get(student=id)
+def attendance(request):
     
     return render(request, 'attendance.html')
 
 @login_required(login_url='/login')
 def profile(request):
-    return render(request, 'profile.html')
+   if request.method == 'POST':
+        form = StudentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+            # redirect to success page
+   else:
+     form = StudentForm()
+   return render(request, 'profile.html', {'form': form})
 
 @login_required(login_url='/login')
 def logout_view(request):

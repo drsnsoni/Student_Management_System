@@ -9,12 +9,11 @@ class SignUpForm(UserCreationForm):
 
 class StudentForm(forms.ModelForm):
     name  = forms.TextInput()
-    email = forms.EmailField()
+    email = forms.EmailInput
     Enroll_no = forms.IntegerField()
-    date_of_birth = forms.DateField()
+    date_of_birth = forms.DateInput()
     SPI = forms.IntegerField()
     CGPA = forms.IntegerField()
-    adhar_no = forms.IntegerField()
     sem = forms.IntegerField()
     CHOICE_GENDER = ( ('M', 'MALE'),
         ('F', 'FEMALE'),
@@ -23,22 +22,20 @@ class StudentForm(forms.ModelForm):
     gender = forms.ChoiceField(choices = CHOICE_GENDER)
     mobile_no = forms.IntegerField()
     parents_no = forms.IntegerField()
-    parents_email = forms.EmailField()
     address =forms.TextInput()
     class Meta:
         model = Student
         fields = (
             'name',
+            'profile_photo',
             'email',
             'Enroll_no',
             'date_of_birth',
             'SPI',
             'CGPA',
-            'adhar_no',
             'sem',
             'gender',
             'mobile_no',
             'parents_no',
-            'parents_email',
             'address'
         )
