@@ -9,7 +9,10 @@ urlpatterns = [
     path('result/', views.result, name="result"),
     path('activity/', views.activity, name="activity"),
     path('assignments/', views.assignment, name="assignments"),
+    path('notification/', views.notification, name="notification"),
     path('profile/', views.profile, name="personalinfo"),
+    path('upcoming/', views.upcoming, name="upcoming"),
+    path('store/', views.store, name="store"),
     path('logout/', views.logout_view, name="logout"),
     # path('login/form/', views.studnt, name="studentform"),
 ]

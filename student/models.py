@@ -22,19 +22,23 @@ class Student(models.Model):
     address = models.TextField()
 
     def __str__(self):
-        return self.name
+        return str(self.Enroll_no)
 
 #activity model
 class Activity(models.Model):
     activity_title = models.TextField()
     activity_file = models.ImageField(upload_to='static/activity')
     enroll_no = models.IntegerField()
+    def __str__(self):
+        return str(self.enroll_no) + ' (' + str(self.activity_title)+ ')'
 
 #assignment table
 class Assignment(models.Model):
     assignment_title = models.TextField()
     assignment_file = models.ImageField(upload_to='static/assignment')
     enroll_no = models.IntegerField()
+    def __str__(self):
+        return str(self.enroll_no) + ' (' + str(self.assignment_title)+ ')'
 
 #course model
 class Course(models.Model):
@@ -76,14 +80,67 @@ class Enroll(models.Model):
     name = models.ForeignKey(Student, on_delete=models.CASCADE)
     enrollment = models.IntegerField(unique=True)
 
+    def __str__(self):
+        return self.name
+
 #result
 class StudentResult(models.Model):
-    student = models.ForeignKey(Enroll, on_delete=models.CASCADE)
+    enroll_no = models.IntegerField(default=0)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
     marks_obtained = models.IntegerField()
     total_marks = models.IntegerField()
 
     def __str__(self):
-        return str(self.student) + '(' + str(self.exam)+ ')'
+        return str(self.student)
 
+#notifications model
+class Notification(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    image = models.ImageField(upload_to='static/notification', blank=True)
+    date = models.DateField()
+    def __str__(self):
+        return self.title
+
+#for student buy    
+class Store(models.Model):
+    title = models.CharField(max_length=100)
+    TSHIRT_CHOICES = [
+        ('M', 'MALE'),
+        ('F', 'FEMALE'),
+        ('O', 'Other'),
+    ]
+    size = models.CharField(choices=TSHIRT_CHOICES, max_length=20)
+    description = models.TextField()
+    date = models.DateField()
+
+    def __str__(self):
+        return self.title
+
+#products of college
+class Products(models.Model):
+    name = models.CharField(max_length=100)
+    available_size = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='static/products', blank=True)
+    def __str__(self):
+        return self.name
+    
+#upcoming Events 
+class Upcoming(models.Model):
+    event_name = models.CharField(max_length=200)
+    event_link = models.CharField(max_length=500, blank=True)
+    description = models.TextField()
+    event_banner = models.ImageField(blank=True, upload_to='static/event')
+    event_date  = models.DateField()
+    def __str__(self):
+        return self.event_name
+    
+#attendance 
+class Attendance(models.Model):
+    enroll_no = models.IntegerField()
+    year_day = models.IntegerField()
+    last_date = models.DateField()
+    def __str__(self):
+        return str(self.enroll_no)

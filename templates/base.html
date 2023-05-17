@@ -39,7 +39,7 @@
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'dashboard' user.get_username  %}">
+                    <a class="nav-link" href="{% url 'dashboard' user.get_username  %}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
                         </div>
@@ -49,7 +49,7 @@
                 <li class="nav-item">
                     <a class="nav-link " href="/result">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                            <i class="ni ni-hat-3 text-warning text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Results</span>
                     </a>
@@ -57,23 +57,23 @@
                 <li class="nav-item">
                     <a class="nav-link " href="/activity">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
+                            <i class="ni ni-paper-diploma text-success text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Activity</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="/attendance">
+                    <a class="nav-link " href="/notification">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-app text-info text-sm opacity-10"></i>
+                            <i class="ni ni-bell-55 text-info text-sm opacity-10"></i>
                         </div>
-                        <span class="nav-link-text ms-1">Schedual</span>
+                        <span class="nav-link-text ms-1">Notifications</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " href="/assignments">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-app text-info text-sm opacity-10"></i>
+                            <i class="ni ni-collection text-info text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Assignments</span>
                     </a>
@@ -81,23 +81,30 @@
                 <li class="nav-item">
                     <a class="nav-link " href="/profile">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-world-2 text-danger text-sm opacity-10"></i>
+                            <i class="ni ni-single-02 text-danger text-sm opacity-10"></i>
                         </div>
-                        <span class="nav-link-text ms-1">Personal Information</span>
+                        <span class="nav-link-text ms-1">Update Information</span>
                     </a>
                 </li>
                 <li class="nav-item mt-3">
-                    <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
+                    <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Other</h6>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="../pages/profile.html">
+                    <a class="nav-link " href="/upcoming">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+                            <i class="ni ni-trophy text-dark text-sm opacity-10"></i>
                         </div>
-                        <span class="nav-link-text ms-1">Other Updates Or Notice</span>
+                        <span class="nav-link-text ms-1">Upcoming Events</span>
                     </a>
                 </li>
-
+                <li class="nav-item">
+                    <a class="nav-link " href="/store">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-shop text-dark text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Shop</span>
+                    </a>
+                </li>
 
             </ul>
         </div>
@@ -110,9 +117,9 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-                        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Dashboard</li>
+                        <li class="breadcrumb-item text-sm text-white active" aria-current="page"></li>
                     </ol>
-                    <h6 class="font-weight-bolder text-white mb-0">Dashboard</h6>
+                    <h6 class="font-weight-bolder text-white mb-0">{% block page %}{% endblock %}</h6>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -163,7 +170,7 @@
                                     <div class="numbers">
                                         <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Student</p>
                                         <h5 class="font-weight-bolder">
-                                            1400
+                                            {{ basic.total_student }}
                                         </h5>
 
                                     </div>
@@ -185,7 +192,7 @@
                                     <div class="numbers">
                                         <p class="text-sm mb-0 text-uppercase font-weight-bold">CGPA</p>
                                         <h5 class="font-weight-bolder">
-                                            8.00
+                                           {{basic.cgpa}}
                                         </h5>
 
                                     </div>
@@ -207,7 +214,7 @@
                                     <div class="numbers">
                                         <p class="text-sm mb-0 text-uppercase font-weight-bold">Progree</p>
                                         <h5 class="font-weight-bolder">
-                                            Great
+                                            {{ basic.progress }}
                                         </h5>
 
                                     </div>
@@ -229,7 +236,7 @@
                                     <div class="numbers">
                                         <p class="text-sm mb-0 text-uppercase font-weight-bold">Attendance</p>
                                         <h5 class="font-weight-bolder">
-                                            85%
+                                           {{ basic.percentage }} %
                                         </h5>
 
                                     </div>

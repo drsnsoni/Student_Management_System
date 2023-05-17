@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page %}Store{% endblock %}
+
+{% block title %}
+    store
+{% endblock %}
+
+{% block content %}
+    <div class="container my-4">
+
+
+    
+        <h2 class="text-center" style="color: aliceblue;">University Products</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4 my-4">
+            {% for item in product %}
+            <div class="col">
+              <div class="card">
+                <img src="../{{ item.image }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{ item.name }}</h5>
+                  <p class="card-text">{{ item.available_size}}</p>
+                  <a class="btn btn-primary" href="#" role="button">Buy Now</a>
+
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          
+           
+          </div>
+    </div>
+
+{% endblock %}

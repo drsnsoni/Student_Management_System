@@ -58,7 +58,10 @@ TEMPLATES = [
         },
     },
 ]
-
+TEMPLATE_CONTEXT_PROCESSORS = (
+    # maybe other here
+    'app.context_processors.top_products',
+)
 WSGI_APPLICATION = 'SmS_project.wsgi.application'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

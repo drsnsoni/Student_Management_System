@@ -5,8 +5,36 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from .forms import SignUpForm, StudentForm, activityform, assignmentform
-from .models import Student, StudentResult,Activity,Assignment
+from .models import Student, StudentResult,Activity,Assignment, Notification, Products, Attendance, Upcoming
 from django.contrib.auth.models import User
+
+def base(name):
+    #attendance
+    total_days = 365  # Total number of days
+    attended_days = Attendance.objects.filter(enroll_no=str(name))
+    final= str(attended_days.values("year_day")[0]['year_day'])
+    attendance_percentage = (int(final) / total_days) * 100
+    percentage = int(attendance_percentage)
+
+    if attended_days=='':
+        percentage="Not Found"
+    #cgpa
+    cgpa = Student.objects.filter(Enroll_no=str(name))
+    cgpa2 = int(cgpa.values('CGPA')[0]['CGPA'])
+    #progress
+    if cgpa2 > 7:
+        progress = "Nice Great"
+    elif cgpa < 5:
+        progress = "Good"
+    else:
+        progress = "work Hard"
+    #total students
+    total_student = Student.objects.all()
+    count = total_student.count()
+
+    return {'cgpa': cgpa2, 'total_student':count, 'percentage':percentage, 'progress': progress}
+
+
 
 # Create your views here.
 def index(request):
@@ -49,9 +77,12 @@ def signup(request):
 def dashboard(request, id):
     stud = User.objects.get(username=id)
     stud_data = Student.objects.get(Enroll_no = id)
+    user = request.user
+    basic=base(user)
     context={
         'student':stud,
-        'stud_data':stud_data
+        'stud_data':stud_data,
+        'basic':basic,
     }
    
     return render(request, 'dashboard.html', context)
@@ -59,9 +90,13 @@ def dashboard(request, id):
 
 @login_required(login_url='/login')
 def result(request):
-    result = StudentResult.objects.all()
+    user = request.user
+    basic=base(user)
+    result = StudentResult.objects.filter(enroll_no=str(user))
+    print(result)
     context = {
-        'result' : result
+        'result' : result,
+        'basic':basic,
     }
     return render(request, 'results.html', context)
 
@@ -76,8 +111,10 @@ def activity(request):
     else:
      form = activityform()  
     user = request.user
+   
+    basic=base(user)
     act = Activity.objects.filter(enroll_no=str(user))
-    return render(request,'activity.html', {'form': form, 'activity':act})
+    return render(request,'activity.html', {'form': form, 'activity':act, 'basic':basic})
 
 
 @login_required(login_url='/login')
@@ -91,8 +128,9 @@ def assignment(request):
     else:
      form = assignmentform()  
     user = request.user
+    basic=base(user)
     asign= Assignment.objects.filter(enroll_no=str(user))
-    return render(request, 'assignments.html',{'form': form, 'asign':asign})
+    return render(request, 'assignments.html',{'form': form, 'asign':asign, 'basic':basic})
 
 @login_required(login_url='/login')
 def profile(request):
@@ -100,14 +138,39 @@ def profile(request):
         form = StudentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('profile')
+            return redirect('personalinfo')
             # redirect to success page
    else:
      form = StudentForm()
-   return render(request, 'profile.html', {'form': form})
+     user = request.user
+    
+   return render(request, 'profile.html', {'form': form, })
 
 @login_required(login_url='/login')
 def logout_view(request):
     logout(request)
     request.session['user']=False
     return redirect('login')
+
+@login_required(login_url='/login')
+def notification(request):
+   user = request.user
+   basic=base(user)
+   notify = Notification.objects.all()
+   return render(request, 'notification.html', {'notify':notify, 'basic':basic})
+
+@login_required(login_url='/login')
+def store(request):
+   #for Attandance
+   user = request.user
+   basic=base(user)
+   product = Products.objects.all()
+   return render(request, 'store.html', {'product':product, 'basic':basic})
+
+@login_required(login_url='/login')
+def upcoming(request):
+    user = request.user
+    basic=base(user)
+    upcoming = Upcoming.objects.all()
+    return render(request, 'upcoming.html', {'basic':basic, 'upcoming':upcoming})
+
