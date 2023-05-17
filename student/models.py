@@ -1,5 +1,16 @@
 from django.db import models
 
+#course model
+class Course(models.Model):
+    course_name = models.TextField()
+    def __str__(self):
+        return self.course_name
+
+#Department Model
+class Department(models.Model):
+    department_name = models.TextField()
+    def __str__(self):
+        return self.department_name
 
 # Student Model
 class Student(models.Model):
@@ -20,6 +31,9 @@ class Student(models.Model):
     mobile_no = models.IntegerField()
     parents_no = models.IntegerField()
     address = models.TextField()
+    cource = models.ForeignKey(Course, blank=True,default=1, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, blank=True, default='1',on_delete=models.CASCADE)
+    studying = models.BooleanField(default=1)
 
     def __str__(self):
         return str(self.Enroll_no)
@@ -40,17 +54,7 @@ class Assignment(models.Model):
     def __str__(self):
         return str(self.enroll_no) + ' (' + str(self.assignment_title)+ ')'
 
-#course model
-class Course(models.Model):
-    course_name = models.TextField()
-    def __str__(self):
-        return self.course_name
-    
-#Department Model
-class Department(models.Model):
-    department_name = models.TextField()
-    def __str__(self):
-        return self.department_name
+
 
 #Acadamicinfo Model
 class AcadamicInfo(models.Model):

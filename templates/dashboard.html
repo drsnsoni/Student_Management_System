@@ -1,4 +1,4 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 {% block title %} Dashboard {% endblock %}
 {% block page %}Dashboard{% endblock %}
 {% block content %}
@@ -6,7 +6,8 @@
     <div class="container col-3 text-center">
         {% load static %}
 
-        <img src="{% static stud_data.profile_photo %}"class=" rounded-circle " alt="Cinque Terre" style="max-height:300px">
+        <img src="/{{  stud_data.profile_photo  }}" class=" rounded-circle " alt="Cinque Terre"
+            style="max-height:300px">
 
         <h3>{{ student.first_name }}</h2>
             <h3>{{ student.username }}</h2>
@@ -155,22 +156,14 @@
                     <tr>
                         <td>
                             <div class="d-flex px-2">
-
                                 <div class="my-auto">
                                     <h6 class="mb-0 text-lg">Course</h6>
                                 </div>
                             </div>
                         </td>
                         <td>
-                            <p class="text-lg font-weight-bold mb-0">BE</p>
+                            <p class="text-lg font-weight-bold mb-0">{{ stud_data.cource }}</p>
                         </td>
-
-                        <!-- 
-                        <td class="align-middle">
-                            <button class="btn btn-link text-secondary mb-0">
-                    <i class="fa fa-ellipsis-v text-xs" aria-hidden="true"></i>
-                  </button>
-                        </td> -->
                     </tr>
                     <tr>
                         <td>
@@ -182,7 +175,7 @@
                             </div>
                         </td>
                         <td>
-                            <p class="text-lg font-weight-bold mb-0">IT</p>
+                            <p class="text-lg font-weight-bold mb-0">{{ stud_data.department }}</p>
                         </td>
 
                     </tr>
@@ -196,7 +189,12 @@
                             </div>
                         </td>
                         <td>
-                            <p class="text-lg font-weight-bold mb-0">Studying...</p>
+                            {% if stud_data.studying %}
+                            <p class="text-lg font-weight-bold mb-0">studying.....</p>
+                            {% else %}
+                            <p class="text-lg font-weight-bold mb-0">completed....</p>
+                            {% endif %}
+
                         </td>
 
                     </tr>
@@ -205,12 +203,12 @@
                             <div class="d-flex px-2">
 
                                 <div class="my-auto">
-                                    <h6 class="mb-0 text-lg">CPI</h6>
+                                    <h6 class="mb-0 text-lg">SPI</h6>
                                 </div>
                             </div>
                         </td>
                         <td>
-                            <p class="text-lg font-weight-bold mb-0">8.0</p>
+                            <p class="text-lg font-weight-bold mb-0">{{ stud_data.SPI }}</p>
                         </td>
 
                     </tr>
@@ -224,7 +222,7 @@
                             </div>
                         </td>
                         <td>
-                            <p class="text-lg font-weight-bold mb-0">8.0</p>
+                            <p class="text-lg font-weight-bold mb-0">{{ stud_data.CGPA }}</p>
                         </td>
 
                     </tr>
@@ -238,7 +236,7 @@
                             </div>
                         </td>
                         <td>
-                            <p class="text-lg font-weight-bold mb-0">8</p>
+                            <p class="text-lg font-weight-bold mb-0">{{ stud_data.sem }}</p>
                         </td>
 
                     </tr>

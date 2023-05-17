@@ -10,29 +10,33 @@ from django.contrib.auth.models import User
 
 def base(name):
     #attendance
-    total_days = 365  # Total number of days
-    attended_days = Attendance.objects.filter(enroll_no=str(name))
-    final= str(attended_days.values("year_day")[0]['year_day'])
-    attendance_percentage = (int(final) / total_days) * 100
-    percentage = int(attendance_percentage)
 
-    if attended_days=='':
-        percentage="Not Found"
+     attended_days = Attendance.objects.filter(enroll_no=str(name))
+     if len(attended_days)==1:
+        total_days = 365  # Total number of days
+        final= str(attended_days.values("year_day")[0]['year_day'])
+        attendance_percentage = (int(final) / total_days) * 100
+        percentage = int(attendance_percentage)
+        
+     else:
+        percentage = "Not Found"
+
+    
     #cgpa
-    cgpa = Student.objects.filter(Enroll_no=str(name))
-    cgpa2 = int(cgpa.values('CGPA')[0]['CGPA'])
+     cgpa = Student.objects.filter(Enroll_no=str(name))
+     cgpa2 = int(cgpa.values('CGPA')[0]['CGPA'])
     #progress
-    if cgpa2 > 7:
+     if cgpa2 >= 7:
         progress = "Nice Great"
-    elif cgpa < 5:
+     elif cgpa <= 5:
         progress = "Good"
-    else:
+     else:
         progress = "work Hard"
     #total students
-    total_student = Student.objects.all()
-    count = total_student.count()
+     total_student = Student.objects.all()
+     count = total_student.count()
 
-    return {'cgpa': cgpa2, 'total_student':count, 'percentage':percentage, 'progress': progress}
+     return {'cgpa': cgpa2, 'total_student':count, 'percentage':percentage, 'progress': progress}
 
 
 
@@ -143,8 +147,7 @@ def profile(request):
    else:
      form = StudentForm()
      user = request.user
-    
-   return render(request, 'profile.html', {'form': form, })
+   return render(request, 'profile.html', {'form': form})
 
 @login_required(login_url='/login')
 def logout_view(request):
