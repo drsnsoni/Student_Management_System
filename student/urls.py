@@ -14,5 +14,4 @@ urlpatterns = [
     path('upcoming/', views.upcoming, name="upcoming"),
     path('store/', views.store, name="store"),
     path('logout/', views.logout_view, name="logout"),
-    # path('login/form/', views.studnt, name="studentform"),
 ]
